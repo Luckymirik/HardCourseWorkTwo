@@ -13,7 +13,6 @@ import java.util.Collection;
 @RequestMapping("/get")
 public class  ExamController {
     private final ExaminerServiceImpl examinerService;
-
     public ExamController(ExaminerServiceImpl examinerService) {
         this.examinerService = examinerService;
     }
