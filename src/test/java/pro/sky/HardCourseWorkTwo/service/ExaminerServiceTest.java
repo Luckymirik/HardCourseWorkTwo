@@ -17,10 +17,13 @@ import java.util.List;
 class ExaminerServiceTest {
     @Mock
     private JavaQuestionService javaQuestionService;
+    @Mock
+    private MathQuestionService mathQuestionService;
     @InjectMocks
     private ExaminerServiceImpl examinerService;
     @BeforeEach
     public void beforeEach() {
+        examinerService = new ExaminerServiceImpl(javaQuestionService,mathQuestionService);
         Mockito.when(javaQuestionService.getAll()).thenReturn(
                 List.of(
                         new Question("●\t@Component", "Spring определяет этот класс как кандидата для создания bean"),
@@ -30,6 +33,12 @@ class ExaminerServiceTest {
                                 "Диспетчер сервлетов просматривает такие классы для поиска @RequestMapping")
                 )
         );
+        Mockito.when(mathQuestionService.getAll()).thenReturn(
+                List.of(
+                        new Question("Какую часть оборота вы прошли," +
+                                " если встали лицом на запад и повернулись по часовой стрелке лицом на юг?","¾")
+                )
+                );
     }
 
 
@@ -37,6 +46,6 @@ class ExaminerServiceTest {
     @Test
     void getQuestion() {
         Assertions.assertThrows(AmountMoreThanRequiredException.class,
-                ()->examinerService.getQuestion(4));
+                ()->examinerService.getQuestion(5));
     }
 }
