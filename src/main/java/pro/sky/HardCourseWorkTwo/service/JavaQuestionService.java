@@ -3,6 +3,7 @@ package pro.sky.HardCourseWorkTwo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import pro.sky.HardCourseWorkTwo.Exception.EmptyArrayException;
 import pro.sky.HardCourseWorkTwo.Exception.QuestionAlreadyAddedException;
 import pro.sky.HardCourseWorkTwo.Exception.QuestionNotFoundException;
 import pro.sky.HardCourseWorkTwo.entity.Question;
@@ -41,6 +42,9 @@ public class JavaQuestionService implements QuestionService{
 
     public Question getRandomQuestion(){
         Question[] arr = javaQuestionRepository.getAll().toArray(new Question[0]);
+        if (arr.length==0){
+            throw new EmptyArrayException();
+        }
         return arr[random.nextInt(arr.length)];
 
 

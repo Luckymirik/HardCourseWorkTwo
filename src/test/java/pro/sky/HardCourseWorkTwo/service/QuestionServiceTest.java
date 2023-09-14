@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class QuestionServiceTest {
-//    Set<Question> myQuestion;
+
 
     @Mock
     private JavaQuestionRepository javaQuestionRepository;

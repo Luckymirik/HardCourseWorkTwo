@@ -12,6 +12,7 @@ import java.util.*;
 public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService questionService;
     private final QuestionService mathQuestionService;
+    private final Random random = new Random();
     public ExaminerServiceImpl(QuestionService questionService,@Qualifier("mathQuestionService") QuestionService mathQuestionService) {
         this.questionService = questionService;
         this.mathQuestionService = mathQuestionService;
@@ -23,13 +24,9 @@ public class ExaminerServiceImpl implements ExaminerService {
         if (amount < 0 || amount > questionService.getAll().size()+mathQuestionService.getAll().size()) {
             throw new AmountMoreThanRequiredException();
         }
-        Collection<Question> allQuestion = new HashSet<>();
-        allQuestion.addAll(questionService.getAll());
-        allQuestion.addAll(mathQuestionService.getAll());
-        if (amount==questionService.getAll().size()+mathQuestionService.getAll().size()){
-            return allQuestion;
-        }
-        Random random = new Random();
+
+
+
         while (randomQuestion.size() < amount) {
             if(random.nextBoolean()) {
                 randomQuestion.add(questionService.getRandomQuestion());

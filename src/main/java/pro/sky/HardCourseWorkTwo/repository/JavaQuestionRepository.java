@@ -19,8 +19,7 @@ public class JavaQuestionRepository implements QuestionRepository {
 
     private final Set<Question> javaQuestions = new HashSet<>();
 
-    public JavaQuestionRepository() {
-    }
+
 
     @PostConstruct
     public void init() {
@@ -91,22 +90,18 @@ public class JavaQuestionRepository implements QuestionRepository {
     }
     @Override
     public Question add(Question question){
-        for (Question q:javaQuestions){
-            if (q.equals(question)){
-                throw new QuestionAlreadyAddedException();
-            }
+        if (!javaQuestions.add(question)){
+            throw new QuestionAlreadyAddedException();
         }
-        javaQuestions.add(question);
         return question;
     }
     @Override
 
     public Question remove(Question question){
-        if(javaQuestions.contains(question)) {
-            javaQuestions.remove(question);
-            return question;
+        if (!javaQuestions.remove(question)) {
+            throw new QuestionNotFoundException();
         }
-        throw new QuestionNotFoundException();
+        return question;
     }
     @Override
     public Collection<Question> getAll(){

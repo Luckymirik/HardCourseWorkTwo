@@ -71,21 +71,17 @@ public class MathQuestionRepository implements QuestionRepository {
     }
     @Override
     public Question add(Question question){
-        for (Question q:mathQuestions){
-            if (q.equals(question)){
-                throw new QuestionAlreadyAddedException();
-            }
+        if (!mathQuestions.add(question)){
+            throw new QuestionAlreadyAddedException();
         }
-        mathQuestions.add(question);
         return question;
     }
 
     public Question remove(Question question){
-        if(mathQuestions.contains(question)) {
-            mathQuestions.remove(question);
-            return question;
+        if (!mathQuestions.remove(question)) {
+            throw new QuestionNotFoundException();
         }
-        throw new QuestionNotFoundException();
+        return question;
     }
     public Collection<Question> getAll(){
         return  Collections.unmodifiableSet(mathQuestions);

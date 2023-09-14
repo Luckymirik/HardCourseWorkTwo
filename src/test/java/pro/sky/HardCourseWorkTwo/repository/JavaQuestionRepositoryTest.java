@@ -7,25 +7,29 @@ import pro.sky.HardCourseWorkTwo.Exception.QuestionAlreadyAddedException;
 import pro.sky.HardCourseWorkTwo.Exception.QuestionNotFoundException;
 import pro.sky.HardCourseWorkTwo.entity.Question;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class JavaQuestionRepositoryTest {
-    private final   JavaQuestionRepository javaQuestionRepository = new JavaQuestionRepository();
+    private JavaQuestionRepository javaQuestionRepositoryTest;
     @BeforeEach
     public void beforeEach(){
-        javaQuestionRepository.add("IOC","Центральной частью Spring является подход Inversion of Control, который позволяет конфигурировать и управлять объектами Java с помощью рефлексии. Вместо ручного внедрения зависимостей, фреймворк забирает ответственность за это посредством контейнера. Контейнер отвечает за управление жизненным циклом объекта: создание объектов, вызов методов инициализации и конфигурирование объектов путём связывания их между собой.\n" +
+        javaQuestionRepositoryTest.add("IOC","Центральной частью Spring является подход Inversion of Control, который позволяет конфигурировать и управлять объектами Java с помощью рефлексии. Вместо ручного внедрения зависимостей, фреймворк забирает ответственность за это посредством контейнера. Контейнер отвечает за управление жизненным циклом объекта: создание объектов, вызов методов инициализации и конфигурирование объектов путём связывания их между собой.\n" +
                 "Объекты, создаваемые контейнером, также называются управляемыми объектами (beans). Обычно, конфигурирование контейнера, осуществляется путём внедрения аннотаций (начиная с 5 версии J2SE), но также, есть возможность, по старинке, загрузить XML-файлы, содержащие определение bean’ов и предоставляющие информацию, необходимую для создания bean’ов.\n" +
                 "Объекты могут быть получены одним из двух способов:\n" +
                 "Dependency Lookup (поиск зависимости) — шаблон проектирования, в котором вызывающий объект запрашивает у объекта-контейнера экземпляр объекта с определённым именем или определённого типа.\n" +
                 "Dependency Injection (внедрение зависимости) — шаблон проектирования, в котором контейнер передает экземпляры объектов по их имени другим объектам с помощью конструктора, свойства или фабричного метода.\n");
-        javaQuestionRepository.add("Application context","ApplicationContext - это главный интерфейс в Spring-приложении, который предоставляет информацию о конфигурации приложения. Так же, как BeanFactory, ApplicationContext загружает бины, связывает их вместе и конфигурирует их определённым образом. Но кроме этого, ApplicationContext обладает дополнительной функциональностью.\n" +
+        javaQuestionRepositoryTest.add("Application context","ApplicationContext - это главный интерфейс в Spring-приложении, который предоставляет информацию о конфигурации приложения. Так же, как BeanFactory, ApplicationContext загружает бины, связывает их вместе и конфигурирует их определённым образом. Но кроме этого, ApplicationContext обладает дополнительной функциональностью.\n" +
                 "ApplicationContext предоставляет:\n" +
                 "●\tФабричные методы бина для доступа к компонентам приложения\n" +
                 "●\tВозможность загружать файловые ресурсы в общем виде\n" +
                 "●\tВозможность публиковать события и регистрировать обработчики на них\n" +
                 "●\tВозможность работать с сообщениями с поддержкой интернационализации\n" +
                 "●\tНаследование от родительского контекста\n");
-        javaQuestionRepository.add("Основные этапы поднятия ApplicationContext","1 этап: Парсирование конфигурации (xml, groovy, JavaConfig и пр.) и создание всех BeanDefinition (AnnotatedBeanDefinitionReader, BeanDefinitionReader, ClassPathBeanDefinitionScanner)\n" +
+        javaQuestionRepositoryTest.add("Основные этапы поднятия ApplicationContext","1 этап: Парсирование конфигурации (xml, groovy, JavaConfig и пр.) и создание всех BeanDefinition (AnnotatedBeanDefinitionReader, BeanDefinitionReader, ClassPathBeanDefinitionScanner)\n" +
                 "2 этап: Настройка созданных BeanDefinition (BeanFactoryPostProcessor)\n" +
                 "3 этап: Создание кастомных FactoryBean (FactoryBean<T>)\n" +
                 "4 этап: BeanFactory создает экземпляры бинов, при необходимости делегируя создание FactoryBean (BeanFactory)\n" +
@@ -40,7 +44,7 @@ class JavaQuestionRepositoryTest {
                 "Эти зависимости отражены в данных конфигурации, используемых BeanFactory. " +
                 "BeanFactory обычно используется тогда, когда ресурсы ограничены (мобильные устройства)" +
                 ". Поэтому, если ресурсы не сильно ограничены, то лучше использовать ApplicationContext.");
-        Question actual = javaQuestionRepository.add("Bean Factory","BeanFactory - это фактический контейнер, " +
+        Question actual = javaQuestionRepositoryTest.add("Bean Factory","BeanFactory - это фактический контейнер, " +
                 "который создает, настраивает и управляет рядом bean-компонентов. " +
                 "Эти бины обычно взаимодействуют друг с другом и, таким образом, имеют зависимости между собой. " +
                 "Эти зависимости отражены в данных конфигурации, используемых BeanFactory. " +
@@ -51,8 +55,9 @@ class JavaQuestionRepositoryTest {
 
     @Test
     void testAdd() {
+
         Assertions.assertThrows(QuestionAlreadyAddedException.class,
-                ()->javaQuestionRepository.add(new Question("IOC","Центральной частью Spring является подход Inversion of Control, который позволяет конфигурировать и управлять объектами Java с помощью рефлексии. Вместо ручного внедрения зависимостей, фреймворк забирает ответственность за это посредством контейнера. Контейнер отвечает за управление жизненным циклом объекта: создание объектов, вызов методов инициализации и конфигурирование объектов путём связывания их между собой.\n" +
+                ()->javaQuestionRepositoryTest.add(new Question("IOC","Центральной частью Spring является подход Inversion of Control, который позволяет конфигурировать и управлять объектами Java с помощью рефлексии. Вместо ручного внедрения зависимостей, фреймворк забирает ответственность за это посредством контейнера. Контейнер отвечает за управление жизненным циклом объекта: создание объектов, вызов методов инициализации и конфигурирование объектов путём связывания их между собой.\n" +
                         "Объекты, создаваемые контейнером, также называются управляемыми объектами (beans). Обычно, конфигурирование контейнера, осуществляется путём внедрения аннотаций (начиная с 5 версии J2SE), но также, есть возможность, по старинке, загрузить XML-файлы, содержащие определение bean’ов и предоставляющие информацию, необходимую для создания bean’ов.\n" +
                         "Объекты могут быть получены одним из двух способов:\n" +
                         "Dependency Lookup (поиск зависимости) — шаблон проектирования, в котором вызывающий объект запрашивает у объекта-контейнера экземпляр объекта с определённым именем или определённого типа.\n" +
@@ -65,7 +70,7 @@ class JavaQuestionRepositoryTest {
     void remove() {
 
         Assertions.assertThrows(QuestionNotFoundException.class,
-                ()->javaQuestionRepository.remove(new Question("Bean Factory","BeanFactory - это фактический контейнер, " +
+                ()->javaQuestionRepositoryTest.remove(new Question("Bean Factory","BeanFactory - это фактический контейнер, " +
                         "который создает, настраивает и управляет рядом bean-компонентов. " +
                         "Эти бины обычно взаимодействуют друг с другом и, таким образом, имеют зависимости между собой. " +
                         "Эти зависимости отражены в данных конфигурации, используемых BeanFactory. " +
@@ -76,6 +81,26 @@ class JavaQuestionRepositoryTest {
     @Test
     void getAll() {
 
-        Assertions.assertNotNull(javaQuestionRepository.getAll());
+        Set<Question> testQuestion = new HashSet<>();
+        testQuestion.add(new Question("IOC","Центральной частью Spring является подход Inversion of Control, который позволяет конфигурировать и управлять объектами Java с помощью рефлексии. Вместо ручного внедрения зависимостей, фреймворк забирает ответственность за это посредством контейнера. Контейнер отвечает за управление жизненным циклом объекта: создание объектов, вызов методов инициализации и конфигурирование объектов путём связывания их между собой.\n" +
+                "Объекты, создаваемые контейнером, также называются управляемыми объектами (beans). Обычно, конфигурирование контейнера, осуществляется путём внедрения аннотаций (начиная с 5 версии J2SE), но также, есть возможность, по старинке, загрузить XML-файлы, содержащие определение bean’ов и предоставляющие информацию, необходимую для создания bean’ов.\n" +
+                "Объекты могут быть получены одним из двух способов:\n" +
+                "Dependency Lookup (поиск зависимости) — шаблон проектирования, в котором вызывающий объект запрашивает у объекта-контейнера экземпляр объекта с определённым именем или определённого типа.\n" +
+                "Dependency Injection (внедрение зависимости) — шаблон проектирования, в котором контейнер передает экземпляры объектов по их имени другим объектам с помощью конструктора, свойства или фабричного метода.\n"));
+        testQuestion.add(new Question("Application context","ApplicationContext - это главный интерфейс в Spring-приложении, который предоставляет информацию о конфигурации приложения. Так же, как BeanFactory, ApplicationContext загружает бины, связывает их вместе и конфигурирует их определённым образом. Но кроме этого, ApplicationContext обладает дополнительной функциональностью.\n" +
+                "ApplicationContext предоставляет:\n" +
+                "●\tФабричные методы бина для доступа к компонентам приложения\n" +
+                "●\tВозможность загружать файловые ресурсы в общем виде\n" +
+                "●\tВозможность публиковать события и регистрировать обработчики на них\n" +
+                "●\tВозможность работать с сообщениями с поддержкой интернационализации\n" +
+                "●\tНаследование от родительского контекста\n"));
+        testQuestion.add(new Question("Основные этапы поднятия ApplicationContext","1 этап: Парсирование конфигурации (xml, groovy, JavaConfig и пр.) и создание всех BeanDefinition (AnnotatedBeanDefinitionReader, BeanDefinitionReader, ClassPathBeanDefinitionScanner)\n" +
+                "2 этап: Настройка созданных BeanDefinition (BeanFactoryPostProcessor)\n" +
+                "3 этап: Создание кастомных FactoryBean (FactoryBean<T>)\n" +
+                "4 этап: BeanFactory создает экземпляры бинов, при необходимости делегируя создание FactoryBean (BeanFactory)\n" +
+                "5 этап: Настройка созданных бинов (BeanPostProcessor)\n"));
+        Assertions.assertEquals(testQuestion,javaQuestionRepositoryTest.getAll());
+
+
     }
 }
