@@ -2,7 +2,6 @@ package pro.sky.HardCourseWorkTwo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,26 +12,25 @@ import pro.sky.HardCourseWorkTwo.service.QuestionService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/exam/java")
-
-public class JavaQuestionController {
-
+@RequestMapping("/exam/math")
+public class MathQuestionController {
     private final QuestionService questionService;
 
-    public JavaQuestionController(QuestionService questionService) {
-        this.questionService = questionService;
+    public MathQuestionController(@Qualifier("mathQuestionService") QuestionService mathQuestionService) {
+        this.questionService = mathQuestionService;
     }
+
     @GetMapping("/add")
-    public Question add(@RequestParam String question,@RequestParam String answer){
+    public Question add(@RequestParam String question, @RequestParam String answer){
         return questionService.add(question,answer);
 
     }
 
-
     @GetMapping("/remove")
-    public Question remove(@RequestParam String question,@RequestParam String answer){
-        return questionService.remove(new Question(question,answer));
+    public Question remove(@RequestParam String question,@RequestParam String answer) {
+        return questionService.remove(new Question(question, answer));
     }
+
     @GetMapping
     public Collection<Question> getAll(){
         return questionService.getAll();

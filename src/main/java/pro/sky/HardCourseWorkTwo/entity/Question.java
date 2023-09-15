@@ -4,11 +4,9 @@ import java.util.Objects;
 
 public class Question {
     private final String question;
-    private  String answer;
+    private final  String answer;
 
-    public Question(Question question) {
-        this.question = String.valueOf(question);
-    }
+
 
     public Question(String question, String answer) {
         this.question = question;
