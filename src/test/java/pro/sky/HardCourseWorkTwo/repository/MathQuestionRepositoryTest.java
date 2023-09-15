@@ -16,6 +16,7 @@ class MathQuestionRepositoryTest {
     private  MathQuestionRepository mathQuestionRepositoryTest ;
     @BeforeEach
     public void beforeEach(){
+        mathQuestionRepositoryTest = new MathQuestionRepository();
         mathQuestionRepositoryTest.add("Как еще называют периметр круга?","Окружность");
         mathQuestionRepositoryTest.add("Какое самое популярное счастливое число от 1 до 9?","Семь");
         mathQuestionRepositoryTest.add("Сколько секунд в одном дне?","86,400 секунд");
